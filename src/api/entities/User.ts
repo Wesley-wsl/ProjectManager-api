@@ -1,3 +1,4 @@
+import { IsEmail, MaxLength, MinLength } from "class-validator";
 import {
     BaseEntity,
     Entity,
@@ -18,9 +19,12 @@ export class User extends BaseEntity {
     @Column({
         unique: true,
     })
+    @IsEmail()
     email: string;
 
     @Column()
+    @MinLength(5)
+    @MaxLength(15)
     password: string;
 
     @Column({

@@ -1,3 +1,4 @@
+import { IsEmail, IsPhoneNumber, MaxLength, MinLength } from "class-validator";
 import {
     BaseEntity,
     Column,
@@ -19,14 +20,18 @@ export class Client extends BaseEntity {
     @Column({
         unique: true,
     })
+    @IsEmail()
     email: string;
 
     @Column()
+    @IsPhoneNumber()
     telephone: string;
 
     @Column({
         unique: true,
     })
+    @MinLength(11)
+    @MaxLength(11)
     cpf: string;
 
     @Column()
