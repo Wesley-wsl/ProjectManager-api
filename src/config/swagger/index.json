@@ -1,0 +1,1545 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Project Manager API",
+        "description": "Project manager api made with Node.js, TypeORM and PostgreSQL.",
+        "contact": {
+            "email": "wesleywestelley@gmail.com",
+            "name": "Wesley Westelley",
+            "url": "http://localhost:3333/"
+        },
+        "version": "1.0.0"
+    },
+
+    "externalDocs": {
+        "description": "Developer Github",
+        "url": "https://github.com/Wesley-wsl"
+    },
+    "tags": [
+        {
+            "name": "User",
+            "description": "Operations about user"
+        },
+        {
+            "name": "Client",
+            "description": "Operations about client"
+        },
+        {
+            "name": "Project",
+            "description": "Operations about project"
+        }
+    ],
+    "paths": {
+        "/api/v1/user": {
+            "post": {
+                "tags": ["User"],
+                "summary": "Create User",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "$ref": "#/definitions/User"
+                                },
+                                "example": {
+                                    "name": "Jorkis2",
+                                    "email": "jorkis22@gmail.com",
+                                    "password": "12345"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": {
+                                            "name": "Jorkis2",
+                                            "email": "jorkis22@gmail.com",
+                                            "password": "$2a$08$YoFgv1ClaAlKteANv31R2.9mS1XpPqfUtE3svXGGMfVXLbvSprlES",
+                                            "active": false,
+                                            "created_at": "2022-03-20T23:53:38.172Z",
+                                            "updated_at": "2022-03-20T23:53:38.172Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request - invalid email/password or User already registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/login": {
+            "post": {
+                "tags": ["User"],
+                "summary": "Login user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "jorkis22@gmail.com",
+                                    "password": "12345"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "token": "string",
+                                            "user": {
+                                                "id": "string",
+                                                "name": "string",
+                                                "email": "string",
+                                                "password": "string",
+                                                "active": "boolean",
+                                                "created_at": "string",
+                                                "updated_at": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "success": false,
+                                        "error": "Email/password incorrect"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{id}": {
+            "patch": {
+                "tags": ["User"],
+                "summary": "Enable user",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Enable user.",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {}
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": {
+                                            "id": "3fa4924a-f606-4aad-8bba-574d12a0cb59",
+                                            "name": "Jorkis",
+                                            "email": "jorkis@gmail.com",
+                                            "password": "$2b$08$hebcSaJ9TQma8MIbTacZreOc7a9BybGYCf8GVeljNKwP/BHkyAUiu",
+                                            "active": true,
+                                            "created_at": "2022-03-12T00:39:51.930Z",
+                                            "updated_at": "2022-03-14T00:29:14.848Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "success": false,
+                                        "error": "User don't exists."
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated for enable a user."
+                    }
+                }
+            }
+        },
+        "/api/v1/client": {
+            "post": {
+                "tags": ["Client"],
+                "summary": "Create client",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "cpf": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Jorkis",
+                                    "email": "jorkis25@gmail.com",
+                                    "telephone": "+55 983649896",
+                                    "cpf": "12345678911"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": {}
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": {
+                                            "name": "Jorkis",
+                                            "email": "jorkis25@gmail.com",
+                                            "telephone": "+55 983649896",
+                                            "cpf": "12345678911",
+                                            "id": "369785e9-6acc-49c2-9334-998ec751d63f",
+                                            "code": "b76dc3bb-649d-40e2-bcfa-a3e165e0ac65",
+                                            "created_at": "2022-03-21T00:38:24.185Z",
+                                            "updated_at": "2022-03-21T00:38:24.185Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request - invalid ID or ID don't exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "example": {
+                                        "success": false,
+                                        "error": "ID is not valid"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Client"],
+                "summary": "List all clients",
+                "security": [{ "bearerAuth": [] }],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": [
+                                            {
+                                                "id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                                "name": "client",
+                                                "email": "client2@gmail.com",
+                                                "telephone": "(61) 94444-4444",
+                                                "cpf": "542323492",
+                                                "code": "f45a663d-f6f2-47d8-95c9-1aaab6e4f539",
+                                                "created_at": "2022-03-13T03:02:16.897Z",
+                                                "updated_at": "2022-03-13T03:02:16.897Z"
+                                            },
+                                            {
+                                                "id": "90bf1732-801f-4bf1-a577-855167ff8691",
+                                                "name": "wesley",
+                                                "email": "wesleywestelley@gmail.com",
+                                                "telephone": "(61) 94444-4444",
+                                                "cpf": "54232349324243423234212",
+                                                "code": "d6bbbfc8-063d-4e3b-a775-661f6d62ac6b",
+                                                "created_at": "2022-03-18T01:57:38.432Z",
+                                                "updated_at": "2022-03-18T01:57:38.432Z"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            }
+        },
+        "/api/v1/client/{clientId}": {
+            "put": {
+                "tags": ["Client"],
+                "summary": "Update client.",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "clientId",
+                        "description": "Update client.",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "telephone": {
+                                        "type": "string"
+                                    },
+                                    "cpf": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Jorkis",
+                                    "email": "jorkis25@gmail.com",
+                                    "telephone": "+55 983649896",
+                                    "cpf": "12345678911"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": {
+                                            "id": "1bfb3ef9-a5df-4e1e-b71a-e4dff3a8e13e",
+                                            "name": "client updated",
+                                            "email": "kkkkgmail.com",
+                                            "telephone": "(61) 94444-4444",
+                                            "cpf": "54232349324243423234212",
+                                            "code": "b5d42645-03fb-4174-945a-d7c879a2629c",
+                                            "created_at": "2022-03-18T20:56:44.063Z",
+                                            "updated_at": "2022-03-21T01:18:36.429Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Client"],
+                "summary": "Delete client.",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "clientId",
+                        "description": "delete client.",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            }
+        },
+        "/api/v1/client/paginated": {
+            "get": {
+                "tags": ["Client"],
+                "summary": "List clients in pagination.",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Page number, start in 0.",
+                        "type": "string",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "clients": {
+                                            "data": [
+                                                {
+                                                    "id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                                    "name": "client",
+                                                    "email": "client2@gmail.com",
+                                                    "telephone": "(61) 94444-4444",
+                                                    "cpf": "542323492",
+                                                    "code": "f45a663d-f6f2-47d8-95c9-1aaab6e4f539",
+                                                    "created_at": "2022-03-13T03:02:16.897Z",
+                                                    "updated_at": "2022-03-13T03:02:16.897Z"
+                                                }
+                                            ],
+                                            "totalElements": 1,
+                                            "page": 0,
+                                            "elements": 1,
+                                            "elementsPerPage": 10,
+                                            "totalPages": 1,
+                                            "firstPage": true,
+                                            "lastPage": true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            }
+        },
+        "/api/v1/client/{id}/project": {
+            "get": {
+                "tags": ["Client"],
+                "summary": "Entry how client.",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Client id.",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": [
+                                            {
+                                                "id": "22d54016-0a3a-4baa-b418-cc3a00d58663",
+                                                "name": "Project",
+                                                "client_id": "90bf1732-801f-4bf1-a577-855167ff8691",
+                                                "user_id": "3fa4924a-f606-4aad-8bba-574d12a0cb59",
+                                                "status": "NEW",
+                                                "logo": null,
+                                                "description": "Interesting",
+                                                "created_at": "2022-03-18T01:59:09.082Z",
+                                                "updated_at": "2022-03-18T01:59:09.082Z",
+                                                "client": {
+                                                    "id": "90bf1732-801f-4bf1-a577-855167ff8691",
+                                                    "name": "jorkis",
+                                                    "email": "jorkis@gmail.com",
+                                                    "telephone": "(61) 94444-4444",
+                                                    "cpf": "54232349324243423234212",
+                                                    "code": "d6bbbfc8-063d-4e3b-a775-661f6d62ac6b",
+                                                    "created_at": "2022-03-18T01:57:38.432Z",
+                                                    "updated_at": "2022-03-18T01:57:38.432Z"
+                                                }
+                                            },
+                                            {
+                                                "id": "3128f18b-8549-49f3-a50e-3a0f832734c7",
+                                                "name": "Project2",
+                                                "client_id": "90bf1732-801f-4bf1-a577-855167ff8691",
+                                                "user_id": "3fa4924a-f606-4aad-8bba-574d12a0cb59",
+                                                "status": "NEW",
+                                                "logo": null,
+                                                "description": "Interesting",
+                                                "created_at": "2022-03-18T01:59:15.958Z",
+                                                "updated_at": "2022-03-18T01:59:15.958Z",
+                                                "client": {
+                                                    "id": "90bf1732-801f-4bf1-a577-855167ff8691",
+                                                    "name": "jorkis22",
+                                                    "email": "jorkis22@gmail.com",
+                                                    "telephone": "(61) 94444-4444",
+                                                    "cpf": "54232349324243423234212",
+                                                    "code": "d6bbbfc8-063d-4e3b-a775-661f6d62ac6b",
+                                                    "created_at": "2022-03-18T01:57:38.432Z",
+                                                    "updated_at": "2022-03-18T01:57:38.432Z"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            }
+        },
+
+        "/api/v1/project": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "List projects.",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "description": "Filter project by name.",
+                        "type": "string",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": []
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Project"],
+                "summary": "Create new project",
+                "security": [{ "bearerAuth": [] }],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "clientId": {
+                                        "type": "string"
+                                    },
+                                    "userId": {
+                                        "type": "string"
+                                    },
+                                    "logo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+
+                                },
+                                "example": {
+                                    "name": "New Project",
+                                    "client_id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                    "description": "Hello World"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": {
+                                            "name": "Project",
+                                            "client_id": "90bf1732-801f-4bf1-a577-855167ff8691",
+                                            "user_id": "3fa4924a-f606-4aad-8bba-574d12a0cb59",
+                                            "status": "NEW",
+                                            "description": "Interesting",
+                                            "logo": null,
+                                            "id": "82e728b3-1562-442e-9cf6-36436074366a",
+                                            "created_at": "2022-03-18T02:53:24.434Z",
+                                            "updated_at": "2022-03-18T02:53:24.434Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{projectId}": {
+            "delete": {
+                "tags": ["Project"],
+                "summary": "Delete project.",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "projectId",
+                        "description": "delete project.",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Project"],
+                "summary": "Show project by id.",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "projectId",
+                        "description": "Show project by id.",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": {
+                                            "id": "bc396782-77fc-4fe6-b60f-10d284581429",
+                                            "name": "New Project",
+                                            "client_id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                            "status": "NEW",
+                                            "logo": "ok",
+                                            "description": "Hello World",
+                                            "created_at": "2022-03-15T01:25:08.747Z",
+                                            "updated_at": "2022-03-15T02:03:02.614Z",
+                                            "client": {
+                                                "id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                                "name": "client",
+                                                "email": "client2@gmail.com",
+                                                "telephone": "(61) 94444-4444",
+                                                "cpf": "542323492",
+                                                "code": "f45a663d-f6f2-47d8-95c9-1aaab6e4f539",
+                                                "created_at": "2022-03-13T03:02:16.897Z",
+                                                "updated_at": "2022-03-13T03:02:16.897Z"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Project"],
+                "summary": "Update project",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "projectId",
+                        "description": "update project",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "clientId": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "New Project",
+                                    "client_id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                    "description": "Hello World"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": {
+                                            "id": "bc396782-77fc-4fe6-b60f-10d284581429",
+                                            "name": "New Project",
+                                            "client_id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                            "status": "IN_PROGRESS",
+                                            "logo": "ok",
+                                            "description": "Hello World",
+                                            "created_at": "2022-03-15T01:25:08.747Z",
+                                            "updated_at": "2022-03-15T02:35:53.378Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Project"],
+                "summary": "Update status project.",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "projectId",
+                        "description": "update project status",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "status": "IN_PROGRESS"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": {
+                                            "id": "bc396782-77fc-4fe6-b60f-10d284581429",
+                                            "name": "New Project",
+                                            "client_id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                            "status": "IN_PROGRESS",
+                                            "logo": "ok",
+                                            "description": "Hello World",
+                                            "created_at": "2022-03-15T01:25:08.747Z",
+                                            "updated_at": "2022-03-15T02:35:53.378Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/user/{userId}": {
+            "get": {
+                "tags": ["Project"],
+                "summary": "List project of user",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "description": "List project of user",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": [
+                                            {
+                                                "id": "54dc4efa-462e-4939-9582-29d617c7df38",
+                                                "name": "Project",
+                                                "client_id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                                "user_id": "3fa4924a-f606-4aad-8bba-574d12a0cb59",
+                                                "status": "NEW",
+                                                "logo": "c5d8e7f53106c2b22c90d35290f1e311.jpeg",
+                                                "description": "Interesting",
+                                                "created_at": "2022-03-16T23:07:28.721Z",
+                                                "updated_at": "2022-03-16T23:07:28.721Z",
+                                                "client": {
+                                                    "id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                                    "name": "client",
+                                                    "email": "client2@gmail.com",
+                                                    "telephone": "(61) 94444-4444",
+                                                    "cpf": "542323492",
+                                                    "code": "f45a663d-f6f2-47d8-95c9-1aaab6e4f539",
+                                                    "created_at": "2022-03-13T03:02:16.897Z",
+                                                    "updated_at": "2022-03-13T03:02:16.897Z"
+                                                },
+                                                "user": {
+                                                    "id": "3fa4924a-f606-4aad-8bba-574d12a0cb59",
+                                                    "name": "Jorkis",
+                                                    "email": "jorkis@gmail.com",
+                                                    "password": "$2b$08$hebcSaJ9TQma8MIbTacZreOc7a9BybGYCf8GVeljNKwP/BHkyAUiu",
+                                                    "active": true,
+                                                    "created_at": "2022-03-12T00:39:51.930Z",
+                                                    "updated_at": "2022-03-14T00:29:14.848Z"
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            }
+        },
+        "/api/v1/project/{projectId}/upload": {
+            "put": {
+                "tags": ["Project"],
+                "summary": "Update project logo.",
+                "security": [{ "bearerAuth": [] }],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "projectId",
+                        "description": "Project id",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "logo": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": [{}]
+                                        }
+                                    },
+                                    "example": {
+                                        "success": true,
+                                        "data": {
+                                            "id": "bc396782-77fc-4fe6-b60f-10d284581429",
+                                            "name": "New Project",
+                                            "client_id": "af07452c-40e5-406f-968e-4d921595b6b4",
+                                            "status": "IN_PROGRESS",
+                                            "logo": "f60b06584adb699969914bf7425eb9e9.jpeg",
+                                            "description": "Hello World",
+                                            "created_at": "2022-03-15T01:25:08.747Z",
+                                            "updated_at": "2022-03-16T20:21:07.899Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - User must be authenticated"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "number"
+                    },
+                    "active": {
+                        "type": "boolean",
+                        "required": false
+                    }
+                },
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "Client": {
+                "type": "object",
+                "required": ["name", "email", "telephone", "cpf"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "telephone": {
+                        "type": "string"
+                    },
+                    "cpf": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string",
+                        "required": false
+                    }
+                },
+                "xml": {
+                    "name": "Client"
+                }
+            },
+            "Project": {
+                "type": "object",
+                "required": ["name", "client_id", "user_id", "description"],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "client_id": {
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "type": "number",
+                        "default": 1
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "required": false
+                    },
+                    "logo": {
+                        "type": "string",
+                        "required": false
+                    }
+                },
+                "xml": {
+                    "name": "Cart"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "type": "object",
+            "required": ["name", "email", "password"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "number"
+                },
+                "active": {
+                    "type": "boolean",
+                    "required": false
+                }
+            },
+            "xml": {
+                "name": "User"
+            }
+        },
+        "Client": {
+            "type": "object",
+            "required": ["name", "email", "telephone", "cpf"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "telephone": {
+                    "type": "string"
+                },
+                "cpf": {
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string",
+                    "required": false
+                }
+            },
+            "xml": {
+                "name": "Client"
+            }
+        },
+        "Project": {
+            "type": "object",
+            "required": ["name", "client_id", "user_id", "description"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "client_id": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "number",
+                    "default": 1
+                },
+                "description": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string",
+                    "required": false
+                },
+                "logo": {
+                    "type": "string",
+                    "required": false
+                }
+            },
+            "xml": {
+                "name": "Project"
+            }
+        }
+    }
+}
