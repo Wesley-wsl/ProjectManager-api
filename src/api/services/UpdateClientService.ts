@@ -1,4 +1,4 @@
-import { IUpateClientDTO } from "../dtos/UpateClientDTO";
+import { IUpdateClientDTO } from "../dtos/UpdateClientDTO";
 import { Client } from "../entities/Client";
 
 export class UpdateClientService {
@@ -8,7 +8,7 @@ export class UpdateClientService {
         email,
         telephone,
         cpf,
-    }: IUpateClientDTO): Promise<Client> {
+    }: IUpdateClientDTO): Promise<Client> {
         const client = await Client.findOne({ id });
 
         if (!client) throw new Error("Client don't exists.");
