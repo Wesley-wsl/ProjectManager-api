@@ -6,7 +6,7 @@ export default function database() {
         createConnection({
             type: "postgres",
             url: process.env.DATABASE_URL,
-            entities: ["dist/entities/*.*"],
+            entities: ["dist/api/entities/*.*"],
             extra: {
                 ssl: {
                     require: false,
