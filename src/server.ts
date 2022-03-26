@@ -6,12 +6,13 @@ import express from "express";
 import { resolve } from "path";
 import swaggerUi from "swagger-ui-express";
 
-import "./api/database";
+import database from "./api/database";
 import { errorHandler } from "./api/middlewares/errorHandler";
 import { userRouter, clientRouter, projectRouter } from "./api/routes";
 import swaggerJSON from "./config/swagger/index.json";
 
 config();
+database();
 
 const app = express();
 app.use(cors());
